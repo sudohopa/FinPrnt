@@ -3,6 +3,8 @@ const path = require('path');
 const bcrypt = require('bcryptjs');
 const XLSX = require('xlsx');
 
+require('dotenv').config({ path: path.join(__dirname, '../.env') });
+
 const prisma = new PrismaClient();
 
 function excelToDate(serial) {
@@ -34,8 +36,12 @@ async function main() {
   await prisma.training.deleteMany();
   await prisma.department.deleteMany();
 
-  // Hash a default password for all users
-  const defaultPasswordHash = await bcrypt.hash('123456', 10);
+  const seedPassword = process.env.SEED_DEV_PASSWORD;
+  if (!seedPassword) {
+    throw new Error('SEED_DEV_PASSWORD is required in backend/.env (see .env.example)');
+  }
+
+  const defaultPasswordHash = await bcrypt.hash(seedPassword, 10);
 
   // 1. Seed Departments
   console.log('📋 Seeding departments...');
@@ -110,7 +116,7 @@ async function main() {
 
   // 2b. Add System Admin User
   console.log('👑 Seeding System Admin...');
-  const adminPasswordHash = await bcrypt.hash('123456', 10);
+  const adminPasswordHash = await bcrypt.hash(seedPassword, 10);
   const createdAdmin = await prisma.user.create({
     data: {
       fullName: 'System Admin',

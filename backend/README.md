@@ -18,17 +18,14 @@ REST API server for the HR Management System built with **Express 5**, **Prisma 
 
 ```
 backend/
-├── prisma/            # Schema, migrations & seed
+├── prisma/            # Schema & seed
 ├── src/
-│   ├── config/        # Environment & app config
 │   ├── controllers/   # Route handlers
-│   ├── middlewares/    # Auth, error handling, etc.
-│   ├── routes/        # Express route definitions
-│   ├── services/      # Business logic
-│   ├── utils/         # Shared helpers
-│   ├── validators/    # Zod request schemas
-│   ├── app.js         # Express app setup
-│   └── server.js      # Server entry point
+│   ├── middlewares/     # Auth, error handling
+│   ├── routes/          # Express route definitions
+│   ├── app.js           # Express app setup
+│   └── server.js        # Server entry point
+├── .env.example
 └── package.json
 ```
 
@@ -36,16 +33,16 @@ backend/
 
 | Route               | Description                |
 | -------------------- | -------------------------- |
-| `/api/auth`          | Login, register, JWT auth  |
-| `/api/employees`     | Employee CRUD              |
-| `/api/departments`   | Department management      |
-| `/api/attendance`    | Clock in/out, records      |
-| `/api/leave`         | Leave requests & approvals |
-| `/api/payroll`       | Salary & payroll runs      |
-| `/api/performance`   | Reviews & evaluations      |
-| `/api/training`      | Programs & enrollments     |
-| `/api/analytics`     | Dashboard statistics       |
-| `/api/notifications` | User notifications         |
+| `/auth`              | Login, register, JWT auth  |
+| `/employees`         | Employee CRUD              |
+| `/departments`       | Department management      |
+| `/attendance`        | Clock in/out, records      |
+| `/leave`             | Leave requests & approvals |
+| `/payroll`           | Salary & payroll runs      |
+| `/training`          | Programs & enrollments     |
+| `/selfassessment`    | Self-assessment submissions |
+| `/analytics`         | Dashboard statistics       |
+| `/health`            | Health check               |
 
 ## Quickstart
 
@@ -58,20 +55,18 @@ npm install
 
 ### 2. Configure environment
 
-Create a `.env` file:
-
-```env
-DATABASE_URL="postgresql://<user>:<password>@localhost:5432/hr_system?schema=public"
-PORT=5000
-JWT_SECRET="your-secret-key"
+```bash
+cp .env.example .env
 ```
+
+Edit `.env` with your database URL, JWT secret, and a local-only `SEED_DEV_PASSWORD` for `npm run prisma:seed`.
 
 ### 3. Set up the database
 
 ```bash
-npx prisma generate
-npx prisma db push        # or: npx prisma migrate dev
-npx prisma db seed        # seed demo data
+npm run prisma:generate
+npm run prisma:push
+npm run prisma:seed
 ```
 
 ### 4. Run
@@ -85,11 +80,11 @@ The server starts on `http://localhost:5000`. Health check: `GET /health`.
 
 ## Available Scripts
 
-| Script              | Command                  |
-| ------------------- | ------------------------ |
-| `npm run dev`       | Start with hot-reload    |
-| `npm start`         | Start in production mode |
-| `npm run prisma:generate` | Generate Prisma client |
-| `npm run prisma:migrate`  | Run migrations       |
-| `npm run prisma:studio`   | Open Prisma Studio   |
-| `npm run prisma:seed`     | Seed the database    |
+| Script                    | Command                  |
+| ------------------------- | ------------------------ |
+| `npm run dev`             | Start with hot-reload    |
+| `npm start`               | Start in production mode |
+| `npm run prisma:generate` | Generate Prisma client   |
+| `npm run prisma:push`     | Push schema to database  |
+| `npm run prisma:studio`   | Open Prisma Studio       |
+| `npm run prisma:seed`     | Seed the database        |

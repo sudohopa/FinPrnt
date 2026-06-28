@@ -13,7 +13,7 @@ Full-stack HR management platform with a **Next.js** frontend and **Node.js/Expr
 
 ```bash
 cd backend
-cp .env.example .env   # configure DATABASE_URL, JWT_SECRET, etc.
+cp .env.example .env   # set DATABASE_URL, JWT_SECRET, SEED_DEV_PASSWORD
 npm install
 npm run setup
 npm run dev
@@ -23,7 +23,7 @@ npm run dev
 
 ```bash
 cd frontend
-cp .env.example .env.local
+cp .env.example .env.local   # set NEXT_PUBLIC_API_URL
 npm install
 npm run dev
 ```
