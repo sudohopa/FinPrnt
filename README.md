@@ -1,4 +1,5 @@
 # Finprnt — HR Management System
+<img width="800" height="723" alt="image" src="https://github.com/user-attachments/assets/7eba5007-6b76-4d37-ab88-c231fcaee29b" />
 
 Finprnt is a full-stack HR Management System designed for small and medium-sized enterprises (SMEs). It streamlines HR operations through employee, payroll, leave, and performance management while incorporating AI-powered analytics to provide actionable insights and support strategic decision-making.
 
