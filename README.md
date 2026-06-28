@@ -1,6 +1,6 @@
 # Finprnt — HR Management System
 
-FinPrnt is a full-stack HR Management System designed for small and medium-sized enterprises (SMEs). It streamlines HR operations through employee, payroll, leave, and performance management while incorporating AI-powered analytics to provide actionable insights and support strategic decision-making.
+Finprnt is a full-stack HR Management System designed for small and medium-sized enterprises (SMEs). It streamlines HR operations through employee, payroll, leave, and performance management while incorporating AI-powered analytics to provide actionable insights and support strategic decision-making.
 
 ## Structure
 
