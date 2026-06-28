@@ -1,4 +1,4 @@
-# FinPrnt — HR Management System
+# Finprnt — HR Management System
 
 Full-stack HR management platform with a **Next.js** frontend and **Node.js/Express** backend backed by **Prisma**.
 
