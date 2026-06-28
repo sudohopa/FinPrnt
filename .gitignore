@@ -1,0 +1,88 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Build / output
+dist/
+build/
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+coverage/
+.nyc_output/
+
+# Debug
+.pnpm-debug.log*
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+
+# ESLint
+.eslintcache
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Optional npm cache
+.npm
+
+# Optional eslint cache
+.stylelintcache
+
+# Turbo
+.turbo
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Project-specific — local/runtime data & legacy code
+backend/data/
+backend/frontend-old/
+backend/scratch/
+backend/scratch_*.js
+
+# AI assistant context (not needed in repo)
+AGENTS.md
+CLAUDE.md

@@ -1,0 +1,145 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  fullName     String
+  email        String    @unique
+  username     String    @unique
+  password     String
+  jobTitle     String?
+  role         String    @default("EMPLOYEE")
+  gender       String?
+  departmentId Int?
+  department   Department? @relation(fields: [departmentId], references: [id])
+  hireDate     DateTime?
+  phone        String?
+  location     String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  attendance      Attendance[]
+  leaves          Leave[]
+  payrolls        Payroll[]
+  trainings       TrainingEnrollment[]
+  selfAssessments SelfAssessment[]
+  notifications   Notification[]
+  reviewedLeaves  Leave[]             @relation("LeaveReviewer")
+  reviewedAssessments SelfAssessment[] @relation("AssessmentReviewer")
+}
+
+model Department {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  managerId Int?
+  createdAt DateTime  @default(now())
+
+  employees User[]
+  trainings Training[]
+}
+
+model Attendance {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  employee   User     @relation(fields: [employeeId], references: [id])
+  checkIn    DateTime?
+  checkOut   DateTime?
+  date       String
+  totalHours Float?
+  status     String   @default("PRESENT")
+  createdAt  DateTime @default(now())
+}
+
+model Leave {
+  id             Int      @id @default(autoincrement())
+  employeeId     Int
+  employee       User     @relation(fields: [employeeId], references: [id])
+  leaveType      String
+  startDate      DateTime
+  endDate        DateTime
+  reason         String?
+  status         String   @default("PENDING")
+  reviewedById   Int?
+  reviewedBy     User?    @relation("LeaveReviewer", fields: [reviewedById], references: [id])
+  reviewedAt     DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Payroll {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  employee   User     @relation(fields: [employeeId], references: [id])
+  baseSalary Float
+  bonus      Float    @default(0)
+  allowances Float    @default(0)
+  deductions Float    @default(0)
+  netSalary  Float
+  payPeriod  String
+  status     String   @default("Paid")
+  createdAt  DateTime @default(now())
+}
+
+model Training {
+  id           Int        @id @default(autoincrement())
+  courseName   String
+  courseCode   String     @unique
+  description  String?
+  startDate    DateTime
+  endDate      DateTime
+  departmentId Int
+  department   Department @relation(fields: [departmentId], references: [id])
+  maxEnrolled  Int        @default(30)
+  createdAt    DateTime   @default(now())
+
+  enrollments TrainingEnrollment[]
+}
+
+model TrainingEnrollment {
+  id         Int      @id @default(autoincrement())
+  employeeId Int
+  trainingId Int
+  employee   User     @relation(fields: [employeeId], references: [id])
+  training   Training @relation(fields: [trainingId], references: [id])
+  progress   Float    @default(0)
+  status     String   @default("In Progress")
+  createdAt  DateTime @default(now())
+
+  @@unique([employeeId, trainingId])
+}
+
+model SelfAssessment {
+  id            Int      @id @default(autoincrement())
+  employeeId    Int
+  employee      User     @relation(fields: [employeeId], references: [id])
+  period        String
+  ratings       String
+  overallRating Float?
+  achievements  String?
+  improvements  String?
+  comments      String?
+  status        String   @default("PENDING")
+  reviewedById  Int?
+  reviewedBy    User?    @relation("AssessmentReviewer", fields: [reviewedById], references: [id])
+  hrFeedback    String?
+  hrRating      Float?
+  submittedAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String   @default("INFO")
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
